@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blockchain Verification | LandChain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #172033;
+            padding: 25px;
+        }
+        main {
+            max-width: 850px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .valid { color: #15803d; }
+        .invalid { color: #b91c1c; }
+        .hash {
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+        a { color: #087f8c; }
+    </style>
+</head>
+<body>
+<main>
+    <section class="card">
+        <h1>Blockchain Verification</h1>
+
+        {% if valid %}
+            <h2 class="valid">✓ Blockchain integrity verified</h2>
+            <p>No hash or previous-block-link mismatch was detected.</p>
+        {% else %}
+            <h2 class="invalid">✗ Blockchain integrity check failed</h2>
+            <p>A record or block link may have been altered.</p>
+        {% endif %}
+
+        <p><strong>Total blocks:</strong> {{ block_count }}</p>
+        <a href="{{ url_for('index') }}">← Back to dashboard</a>
+    </section>
+
+    <section class="card">
+        <h2>Block Summary</h2>
+
+        {% for block in chain %}
+            <article>
+                <h3>Block #{{ block.index }} — {{ block.action }}</h3>
+                <p>Land ID: {{ block.land_id }}</p>
+                <p class="hash">Hash: {{ block.hash }}</p>
+                <p class="hash">Previous hash: {{ block.previous_hash }}</p>
+            </article>
+            <hr>
+        {% endfor %}
+    </section>
+</main>
+</body>
+</html>
